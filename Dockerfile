@@ -1,13 +1,15 @@
-FROM --platform=linux/amd64 node:20-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
+
 COPY package.json package-lock.json ./
 RUN npm ci
+
 COPY . .
 
 RUN npm run build
-RUN ls -la .next
-FROM --platform=linux/amd64 node:20-alpine AS runner
+
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
